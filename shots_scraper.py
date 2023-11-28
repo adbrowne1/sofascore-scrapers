@@ -7,16 +7,15 @@ import pandas as pd
 
 
 # Send an HTTP GET request to the URL
-#Headers argument needed to not get rejected 
+#Headers argument needed to not get rejected you will need to find the headers of your own device
 response = requests.get('https://www.sofascore.com/shelbourne-derry-city/vnbsznb#10951001', headers={'User-Agent':
 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36'})
 
 
 # code to fetch and process the data
-
+#finding the web element of the shotmap and copying and a cURL
 soup = BeautifulSoup(response.text, 'html.parser')
 print(response.status_code)
-
 headers = {
     'authority': 'api.sofascore.com',
     'accept': '*/*',
@@ -39,7 +38,7 @@ headers['If-Modified-Since'] = 'Tues, 21 Nov 2023 00:00:00 GMT'
 response = requests.get('https://api.sofascore.com/api/v1/event/10951001/shotmap', headers=headers)
 shots = response.json()
 
-# Extract relevant data and filter by 'isHome'
+# Extract relevant data and filter by 'isHome' this is just filtering to one team only
 filtered_data = [item for item in shots['shotmap'] if item['isHome'] is not True]
 
 # Create DataFrame
@@ -52,5 +51,5 @@ df = pd.DataFrame([
     }
     for item in filtered_data
 ])
-
+#dataframe of playername, shot type (block, miss, save, goal, etc), x and y positions 
 df.to_csv('/Users/adambrowne/Desktop/Personal /LOI Project/Data/Shels Season Review/shelsvsderry_shotmap_43POSSESSION.csv')
