@@ -7,7 +7,7 @@ import pandas as pd
 
 
 # Send an HTTP GET request to the URL
-#Headers argument needed to not get rejected 
+#Headers argument needed to not get rejected, you will need to find the headers of your own device
 response = requests.get('https://www.sofascore.com/shelbourne-derry-city/vnbsznb#10951001', headers={'User-Agent':
 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36'})
 
@@ -22,6 +22,7 @@ print(response.status_code)
 circle_elements = soup.find_all('circle[style="cursor: pointer;"]')
 response.status_code
 # Extract cx, cy, and r values from each circle element
+# copy as cURL
 headers = {
     'authority': 'api.sofascore.com',
     'accept': '*/*',
