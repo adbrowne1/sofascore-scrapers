@@ -46,11 +46,13 @@ headers['If-Modified-Since'] = 'Tues, 21 Nov 2023 00:00:00 GMT'
 response = requests.get('https://api.sofascore.com/api/v1/event/10951001/average-positions', headers=headers)
 print(response.status_code)
 avepos = response.json()
-
+#Now we will extract the average position for players from the "Away" side in the match. 
 data = avepos['away']
+#Exclude substitutions
 filtered_data = [item for item in data if 'incidentType' != 'substitution']
 player_info = [{'name': item['player']['name'], 'averageX': item['averageX'], 'averageY': item['averageY']} for item in filtered_data]
 df = pd.DataFrame(player_info)
 print(df)
+#Dataframe will include player names and their average x and average y positions
 df.to_csv('/Users/adambrowne/Desktop/Personal /LOI Project/Data/Shels Season Review/shelsvderry_playermap.csv', index=False)
 
